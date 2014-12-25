@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 
+
 #initialization
 app = Flask(__name__)
 app.config.update(
