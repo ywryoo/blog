@@ -22,8 +22,8 @@ def page_not_found(e):
 
 
 @app.route("/")
-def hello():
-    return "Hello from Python!"
+def index():
+    return render_template('index.html')
 
 
 #launch
