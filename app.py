@@ -26,6 +26,21 @@ def index():
     return render_template('index.html')
 
 
+@app.route("/list")
+def list():
+    return render_template('list.html')
+
+
+@app.route("/search")
+def search():
+    return render_template('search.html')
+
+
+@app.route("/post")
+def post():
+    return render_template('post.html')
+
+
 #launch
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
