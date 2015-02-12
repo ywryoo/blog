@@ -1,4 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>test</h1>
+<div class="col-xs-12 col-sm-9">
+  <p class="pull-right visible-xs">
+    <button type="button" class="btn btn-default btn-xs" data-toggle="offcanvas">Show!</button>
+  </p>
+  <div class="jumbotron">
+    <h1>{{ main.title }}</h1>
+    <p>{{ main.text|safe }}</p>
+  </div>
+  <div class="row">
+  {% for entry in entries %}
+    <div class="col-6 col-sm-6 col-lg-4">
+      <h2>{{ entry.title }}</h2>
+      <p>{{ entry.text|safe }}</p>
+    </div>
+  {% else %}
+    <div class="col-6 col-sm-6 col-lg-4">
+      <em>Unbelievable. No entries here so far</em>
+    </div>
+  {% endfor %}
+  </div>
+</div>
 {% endblock %}
+{% block sidebar %}
+<li>Sidebar</li>
+<li class="active"><a href="#">Link</a></li>
+<li><a href="#">Link</a></li>
+<li><a href="#">Link</a></li>
+{% endblock %}
+
+<!--unique class를 추가해 글을 클릭했을 때 해당 article로 이동 -->

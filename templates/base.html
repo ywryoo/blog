@@ -9,7 +9,7 @@
     <meta charset="utf-8">
 
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='base.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static',filename='ico/favicon.ico') }}">
     {% endblock %}
 </head>
@@ -17,7 +17,7 @@
   {% block navbar %}
   <div class="navbar-wrapper">
     <div class="container">
-      <div class="navbar navbar-static-top navbar-default">
+      <div class="navbar navbar-static-top navbar-default navbarr">
         <div class="container">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -31,34 +31,43 @@
             <ul class="nav navbar-nav">
               <li class="active"><a href="{{ url_for('index') }}">home</a></li>
               <li><a href="{{ url_for('list') }}">List</a></li>
-              <li><a href="{{ url_for('search') }}">Search</a></li>
+              <li><a href="{{ url_for('search') }}">About</a></li>
             </ul>
-            {% block navbar_right %}
-            <ul class="nav navbar-nav pull-right">
-              <li><a href="/login">Login or Signup</a></li>
-            </ul>
-            {% endblock %}
+            <form class="navbar-form navbar-right" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+              </div>
+            </form>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
   </div>
   {% endblock %}
-  <div class="container page">
-    <div class="content">
+  <div class="container">
+    <div class="row row-offcanvas row-offcanvas-right">
       {% block content %}
       {% endblock %}
+      <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+        <div class="well sidebar-nav">
+          <ul class="nav">
+            {% block sidebar %}
+            {% endblock %}
+          </ul>
+        </div>
+      </div>
     </div>
-    <hr>
+    <hr />
     {% block footer %}
     <footer class="footer">
-      <p>&copy; Shadow</p>
+      <p><i class="glyphicon glyphicon-copyright-mark"></i> Shadow</p>
     </footer>
     {% endblock %}
   </div>
   {% block js_footer %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static',filename='js/base.js') }}"></script>
   {% endblock %}
   </body>
 </html>

@@ -1,12 +1,22 @@
 import os
-from flask import Flask, render_template, send_from_directory
+import db
+from flask import Flask, render_template, send_from_directory, g
 
 
 # initialization
 app = Flask(__name__)
-app.config.update(
-    DEBUG=True,
-)
+app.config.from_object(__name__)
+app.debug = True
+
+
+@app.before_request
+def before_request():
+    g.db = db.conn()
+
+
+@app.teardown_request
+def teardown_request(exception):
+    g.db.close()
 
 
 # controllers
@@ -23,7 +33,11 @@ def page_not_found(e):
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    cur = g.db.cursor()
+    cur.execute("SELECT title, text FROM post ORDER BY id DESC")
+    main = dict(title=cur.fetchone()[0], text=cur.fetchone()[1])
+    entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
+    return render_template('index.html', main=main, entries=entries)
 
 
 @app.route("/list")

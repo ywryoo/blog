@@ -2,4 +2,4 @@
 venv
 *~
 .DS_Store
-
+db_info.py
