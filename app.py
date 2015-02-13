@@ -1,8 +1,8 @@
 import db
 import os
 import time
-from flask import Flask, render_template, send_from_directory, g, request,\
- jsonify
+import json
+from flask import Flask, render_template, send_from_directory, g, request
 
 
 # initialization
@@ -74,10 +74,8 @@ def save():
 def load():
     cur = g.db.cursor()
     cur.execute("SELECT title, text FROM notice ORDER BY date DESC")
-    for row in cur.fetchall():
-        result = dict(title=row[0], text=row[1])
-    print result
-    return jsonify(result)
+    result = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
+    return json.dumps(result)
 
 
 @app.route("/noty_load2", methods=['POST'])
@@ -88,7 +86,7 @@ def load2():
                 WHERE writer = %s ORDER BY date DESC" % writer)
     result = [dict(title=row[0], text=row[1], date=row[2], writer=row[3])
               for row in cur.fetchall()]
-    return jsonify(result)
+    return json.dumps(result)
 
 
 # launch
