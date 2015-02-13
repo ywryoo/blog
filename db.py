@@ -11,7 +11,7 @@ import db_info
 def conn():
     try:
         con = mdb.connect(db_info.dbhost, db_info.dbuser,
-                          db_info.dbpass, db_info.dbname)
+                          db_info.dbpass, db_info.dbname, charset='utf8')
         return con
     except mdb.Error:
         return "Error! Try again later.."

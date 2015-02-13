@@ -64,8 +64,10 @@ def save():
     text = request.form["text"]
     date = time.strftime('%Y-%m-%d %H:%M:%S')
     writer = request.form["writer"]
+    cur.execute("set names utf8")
     cur.execute("INSERT INTO notice(title, text, date, writer) VALUES\
                  ('%s', '%s', '%s', '%s')" % (title, text, date, writer))
+    print title
     g.db.commit()
     return "done!"
 
@@ -88,6 +90,10 @@ def load2():
               for row in cur.fetchall()]
     return json.dumps(result)
 
+
+@app.route("/test")
+def test():
+    return render_template('test.html')
 
 # launch
 if __name__ == "__main__":
