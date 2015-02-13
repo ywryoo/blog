@@ -57,7 +57,7 @@ def post():
     return render_template('post.html')
 
 
-@app.route("/noty_save", methods=['POST'])
+@app.route("/save", methods=['POST'])
 def save():
     cur = g.db.cursor()
     title = request.form["title"]
@@ -67,7 +67,6 @@ def save():
     cur.execute("set names utf8")
     cur.execute("INSERT INTO notice(title, text, date, writer) VALUES\
                  ('%s', '%s', '%s', '%s')" % (title, text, date, writer))
-    print title
     g.db.commit()
     return "done!"
 
