@@ -1,6 +1,8 @@
-import os
 import db
-from flask import Flask, render_template, send_from_directory, g
+import os
+import time
+from flask import Flask, render_template, send_from_directory, g, request,\
+ jsonify
 
 
 # initialization
@@ -53,6 +55,40 @@ def search():
 @app.route("/post")
 def post():
     return render_template('post.html')
+
+
+@app.route("/noty_save", methods=['POST'])
+def save():
+    cur = g.db.cursor()
+    title = request.form["title"]
+    text = request.form["text"]
+    date = time.strftime('%Y-%m-%d %H:%M:%S')
+    writer = request.form["writer"]
+    cur.execute("INSERT INTO notice(title, text, date, writer) VALUES\
+                 ('%s', '%s', '%s', '%s')" % (title, text, date, writer))
+    g.db.commit()
+    return "done!"
+
+
+@app.route("/noty_load")
+def load():
+    cur = g.db.cursor()
+    cur.execute("SELECT title, text FROM notice ORDER BY date DESC")
+    for row in cur.fetchall():
+        result = dict(title=row[0], text=row[1])
+    print result
+    return jsonify(result)
+
+
+@app.route("/noty_load2", methods=['POST'])
+def load2():
+    cur = g.db.cursor()
+    writer = request.form["writer"]
+    cur.execute("SELECT title, text, date FROM notice\
+                WHERE writer = %s ORDER BY date DESC" % writer)
+    result = [dict(title=row[0], text=row[1], date=row[2], writer=row[3])
+              for row in cur.fetchall()]
+    return jsonify(result)
 
 
 # launch
