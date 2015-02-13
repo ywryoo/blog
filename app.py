@@ -76,7 +76,7 @@ def load():
     cur = g.db.cursor()
     cur.execute("SELECT title, text FROM notice ORDER BY date DESC")
     result = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
-    return json.dumps(result)
+    return json.dumps(result, ensure_ascii=False)
 
 
 @app.route("/noty_load2", methods=['POST'])
@@ -87,7 +87,7 @@ def load2():
                 WHERE writer = %s ORDER BY date DESC" % writer)
     result = [dict(title=row[0], text=row[1], date=row[2], writer=row[3])
               for row in cur.fetchall()]
-    return json.dumps(result)
+    return json.dumps(result, ensure_ascii=False)
 
 
 @app.route("/test")
