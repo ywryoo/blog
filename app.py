@@ -1,12 +1,16 @@
 import db
 import os
 import time
+import sys
 import json
 from flask import Flask, render_template, send_from_directory, g, request
 
 
 # initialization
-app = Flask(__name__,static_url_path='/home/www/Blogy/static/')
+if sys.platform.startswith('linux'):
+    app = Flask(__name__, static_url_path='/home/www/Blogy/static/')
+else:
+    app = Flask(__name__)
 app.config.from_object(__name__)
 app.debug = True
 
