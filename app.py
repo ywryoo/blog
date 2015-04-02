@@ -28,11 +28,13 @@ def favicon():
                                'ico/favicon.ico')
 
 
+# error handling
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
 
+# main page
 @app.route("/")
 def index():
     cur = g.db.cursor()
@@ -42,21 +44,31 @@ def index():
     return render_template('index.html', main=main, entries=entries)
 
 
+# list page
 @app.route("/list")
 def list():
     return render_template('list.html')
 
 
+# search page
 @app.route("/search")
 def search():
     return render_template('search.html')
 
 
-@app.route("/post")
-def post():
-    return render_template('post.html')
+# view page
+@app.route("/view")
+def view():
+    return render_template('view.html')
 
 
+# posting page
+@app.route("/posting")
+def insert():
+    return "not yet"
+
+
+# app test - no relation with blog
 @app.route("/save", methods=['POST'])
 def save():
     cur = g.db.cursor()
@@ -98,6 +110,11 @@ def load2():
 @app.route("/test")
 def test():
     return render_template('test.html')
+
+
+@app.route("/fitamin")
+def fitamin():
+    return render_template('fitamin.html')
 
 # launch
 if __name__ == "__main__":
